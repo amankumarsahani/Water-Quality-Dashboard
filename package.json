@@ -40,6 +40,7 @@
     "devDependencies": {
         "axios": "^0.25.0",
         "mini-css-extract-plugin": "2.4.5",
+        "moment": "^2.29.1",
         "react-loading": "^2.0.3"
     }
 }

@@ -1,3 +1,4 @@
+import moment from "moment";
 import Chart from "chart.js/auto";
 
 export const makeWaterData = (arr) => {
@@ -5,7 +6,7 @@ export const makeWaterData = (arr) => {
   let [dataLabels, tds, cod, bod, ph, temp, ec] = [[], [], [], [], [], [], []];
   console.log("WaterDataFetched: ", arr.length);
   for (let i = 0; i < arr.length; i++) {
-    dataLabels.push(arr[i]["Timestamp"]);
+    dataLabels.push(moment(toDate(arr[i]["Timestamp"])).format("lll"));
     tds.push(Math.abs(arr[i].TDS) > 1000 ? 0 : arr[i].TDS);
     cod.push(Math.abs(arr[i].COD) > 100 ? 0 : arr[i].COD);
     bod.push(Math.abs(arr[i].BOD) > 100 ? 0 : arr[i].BOD);
@@ -46,7 +47,7 @@ export const makeChart = (
   yDataArr,
   type,
   colorArr = [],
-  stacked = false
+  fontSize = 14
 ) => {
   if (colorArr === []) {
     yDataArr.forEach((_, i) => {
@@ -58,17 +59,24 @@ export const makeChart = (
   }
   let scales = {
     y: {
-      stacked: stacked,
       position: "left",
       beginAtZero: true,
       grid: {
-        display: false,
+        display: true,
+        color: "#ffffff11",
+      },
+      ticks: {
+        font: { size: fontSize },
       },
     },
     x: {
-      stacked: stacked,
       beginAtZero: true,
-      ticks: { maxRotation: 0, autoskip: true, autoSkipPadding: 20 },
+      ticks: {
+        maxRotation: 0,
+        autoskip: true,
+        autoSkipPadding: 20,
+        font: { size: fontSize },
+      },
       grid: {
         display: false,
       },
@@ -78,7 +86,6 @@ export const makeChart = (
   const datasets = yDataArr.map((yData, i) => {
     if (yAxisIDArr[i] === "y1") {
       scales.y1 = {
-        stacked: stacked,
         position: "right",
         beginAtZero: true,
         grid: {
@@ -96,6 +103,7 @@ export const makeChart = (
       yAxisID: yAxisIDArr[i],
     };
   });
+
   return new Chart(document.getElementById(canvasId).getContext("2d"), {
     type: "bar",
     data: {
@@ -106,6 +114,16 @@ export const makeChart = (
       responsive: true,
       maintainAspectRatio: false,
       scales: scales,
+      plugins: {
+        legend: {
+          labels: {
+            display: true,
+            font: {
+              size: fontSize,
+            },
+          },
+        },
+      },
     },
   });
 };
