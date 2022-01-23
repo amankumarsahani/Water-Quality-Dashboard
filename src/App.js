@@ -13,13 +13,19 @@ function App() {
   const [chart3, setChart3] = useState(null);
   const [liveData, setLiveData] = useState({});
   const [refresh, setRefresh] = useState(false);
+  const [type, setType] = useState(1);
+  const [vw, setVw] = useState();
 
   const destroyCharts = (i) => {
     if (i === 1) chart1 && chart1.destroy();
     else if (i === 2) chart2 && chart2.destroy();
     else if (i === 3) chart3 && chart3.destroy();
+    setVw((0.8 * window.innerWidth) / 100);
   };
 
+  const handleChartType = () => {
+    setType(!type);
+  };
   useEffect(() => {
     axios.get(url + "?lim=20").then((response) => {
       setWaterData(makeWaterData(response.data.water));
@@ -34,6 +40,8 @@ function App() {
 
   useEffect(() => {
     destroyCharts(1);
+    let chartType = ["bar", "bar", "bar"];
+    if (type) chartType = ["line", "line", "line"];
     waterData &&
       setChart1(
         makeChart(
@@ -41,17 +49,19 @@ function App() {
           "title",
           waterData.dataLabels,
           ["COD", "BOD", "pH"],
-          ["y", "y", "y1"],
+          ["y", "y", "y"],
           [waterData.cod, waterData.bod, waterData.ph],
-          ["bar", "bar", "line"],
+          chartType,
           ["#ff006f", "#0062ff", "#15ff00"],
-          true
+          vw
         )
       );
-  }, [waterData]);
+  }, [waterData, type]);
 
   useEffect(() => {
     destroyCharts(2);
+    let chartType = ["bar", "bar"];
+    if (type) chartType = ["line", "line"];
     waterData &&
       setChart2(
         makeChart(
@@ -61,14 +71,17 @@ function App() {
           ["Electro-conductivity", "TDS"],
           ["y", "y1"],
           [waterData.ec, waterData.tds],
-          ["line", "bar"],
-          ["#17fc54", "#bb00ff"]
+          chartType,
+          ["#17fc54", "#bb00ff"],
+          vw
         )
       );
-  }, [waterData]);
+  }, [waterData, type]);
 
   useEffect(() => {
     destroyCharts(3);
+    let chartType = ["bar"];
+    if (type) chartType = ["line"];
     waterData &&
       setChart3(
         makeChart(
@@ -78,11 +91,12 @@ function App() {
           ["Temperature"],
           ["y"],
           [waterData.temp],
-          ["bar"],
-          ["#ff5e00"]
+          chartType,
+          ["#ff5e00"],
+          vw
         )
       );
-  }, [waterData]);
+  }, [waterData, type]);
 
   return (
     <div className="App dark">
@@ -95,16 +109,21 @@ function App() {
         </div>
         <div id="g2" className="graph">
           <div id="liveTitle">
-            <span>Live Data</span>
-            <img
-              id="refresh"
-              src={Refresh}
-              alt="refresh icon"
-              onClick={() => {
-                setRefresh(!refresh);
-                console.log("refreshed");
-              }}
-            ></img>
+            <span className="liveTitleText">Live Data</span>
+            <span className="options">
+              <img
+                id="refresh"
+                src={Refresh}
+                alt="refresh icon"
+                onClick={() => {
+                  setRefresh(!refresh);
+                  console.log("refreshed");
+                }}
+              ></img>
+              <button className="chartTypeButton" onClick={handleChartType}>
+                {type ? "BAR" : "LINE"}
+              </button>
+            </span>
           </div>
           <div className="liveDataHolder">
             <div id="ld0">
