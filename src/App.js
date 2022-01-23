@@ -100,7 +100,9 @@ function App() {
 
   return (
     <div className="App dark">
-      <header className="App-header">Water Quality Monitoring System</header>
+      <header className="App-header">
+        WATER &nbsp; QUALITY &nbsp; MONITORING &nbsp; SYSTEM
+      </header>
       <div className="graphHolder">
         <div id="g1" className="graph">
           <div className="chart">
@@ -109,7 +111,7 @@ function App() {
         </div>
         <div id="g2" className="graph">
           <div id="liveTitle">
-            <span className="liveTitleText">Live Data</span>
+            <span className="liveTitleText">LIVE DATA</span>
             <span className="options">
               <img
                 id="refresh"
