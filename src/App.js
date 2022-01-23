@@ -1,12 +1,11 @@
 import "./App.css";
 import Refresh from "./refresh.png";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeChart, makeWaterData } from "./utils.js";
 function App() {
   const url =
     "https://gcyiihdmt6.execute-api.us-west-2.amazonaws.com/default/GetWaterQuality";
-  const containerRef = useRef();
 
   const [waterData, setWaterData] = useState(null);
   const [chart1, setChart1] = useState(null);
@@ -49,7 +48,7 @@ function App() {
           true
         )
       );
-  }, [waterData, containerRef.current]);
+  }, [waterData]);
 
   useEffect(() => {
     destroyCharts(2);
@@ -66,28 +65,27 @@ function App() {
           ["#17fc54", "#bb00ff"]
         )
       );
-  }, [waterData, containerRef.current]);
+  }, [waterData]);
 
   useEffect(() => {
     destroyCharts(3);
-
     waterData &&
       setChart3(
         makeChart(
           "c3",
           "Temperature",
           waterData.dataLabels,
-          ["temp"],
+          ["Temperature"],
           ["y"],
           [waterData.temp],
           ["bar"],
           ["#ff5e00"]
         )
       );
-  }, [waterData, containerRef.current]);
+  }, [waterData]);
 
   return (
-    <div ref={containerRef} className="App dark">
+    <div className="App dark">
       <header className="App-header">Water Quality Monitoring System</header>
       <div className="graphHolder">
         <div id="g1" className="graph">
