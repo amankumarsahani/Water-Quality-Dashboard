@@ -149,43 +149,47 @@ function App() {
           <div className="liveDataHolder">
             <div id="ld0">
               <span>Time :</span>{" "}
-              <span className="liveDataValue">{liveData.dataLabels}</span>
+              <span className="liveDataValue">
+                {liveData.dataLabels && liveData.dataLabels[1]}
+              </span>
             </div>
             <div id="ld1">
               <span> pH : </span>
               <span className="liveDataValue">
-                {parseFloat(liveData.ph).toFixed(3)}
+                {parseFloat(liveData.ph && liveData.ph[1]).toFixed(3)}
               </span>
             </div>
             <div id="ld2">
               <span> COD : </span>
               <span className="liveDataValue">
-                {parseFloat(liveData.cod).toFixed(3)}
+                {parseFloat(liveData.cod && liveData.cod[1]).toFixed(3)}
               </span>
             </div>
             <div id="ld3">
               <span> BOD : </span>
               <span className="liveDataValue">
                 {" "}
-                {parseFloat(liveData.bod).toFixed(3)}
+                {parseFloat(liveData.bod && liveData.bod[1]).toFixed(3)}
               </span>
             </div>
             <div id="ld4">
               <span> TDS : </span>
               <span className="liveDataValue">
                 {" "}
-                {parseFloat(liveData.tds).toFixed(3)}
+                {parseFloat(liveData.tds && liveData.tds[1]).toFixed(3)}
               </span>
             </div>
             <div id="ld5">
               <span>Electro-Conductivity : </span>
               <span className="liveDataValue">
-                {parseFloat(liveData.ec).toFixed(3)}
+                {parseFloat(liveData.ec && liveData.ec[1]).toFixed(3)} S/m
               </span>
             </div>
             <div id="ld6">
               <span>Temperature : </span>
-              <span className="liveDataValue">{liveData.temp}</span>
+              <span className="liveDataValue">
+                {liveData.temp && liveData.temp[1]} ºC
+              </span>
             </div>
           </div>
         </div>
