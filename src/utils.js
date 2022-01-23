@@ -11,7 +11,7 @@ export const makeWaterData = (arr) => {
     cod.push(Math.abs(arr[i].COD) > 100 ? 0 : arr[i].COD);
     bod.push(Math.abs(arr[i].BOD) > 100 ? 0 : arr[i].BOD);
     ph.push(Math.abs(arr[i].pH) > 100 ? 0 : arr[i].pH);
-    temp.push(Math.abs(arr[i].Temperature) > 100 ? 0 : arr[i].Temperature);
+    temp.push(Math.abs(arr[i].Temperature) > 70 ? 0 : arr[i].Temperature);
     ec.push(
       Math.abs(arr[i]["Electro-conductivity"]) > 100
         ? 0
