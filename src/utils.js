@@ -18,7 +18,6 @@ export const makeWaterData = (arr) => {
         : arr[i]["Electro-conductivity"]
     );
   }
-  console.log({ dataLabels, tds, cod, bod, ph, temp, ec });
   return { dataLabels, tds, cod, bod, ph, temp, ec };
 };
 
