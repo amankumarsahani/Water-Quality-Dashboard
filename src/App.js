@@ -27,7 +27,7 @@ function App() {
     setType(!type);
   };
   useEffect(() => {
-    axios.get(url + "?lim=20").then((response) => {
+    axios.get(url + "?lim=30").then((response) => {
       setWaterData(makeWaterData(response.data.water));
     });
   }, [refresh]);
@@ -88,7 +88,7 @@ function App() {
           "c3",
           "Temperature",
           waterData.dataLabels,
-          ["Temperature"],
+          ["Temperature ºC"],
           ["y"],
           [waterData.temp],
           chartType,
