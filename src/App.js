@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./App.css";
 import Refresh from "./refresh.png";
 import React, { useState, useEffect } from "react";
@@ -14,6 +15,7 @@ function App() {
   const [liveData, setLiveData] = useState({});
   const [refresh, setRefresh] = useState(false);
   const [type, setType] = useState(1);
+  const [limit, setLimit] = useState(30);
   const [vw, setVw] = useState();
 
   const destroyCharts = (i) => {
@@ -26,8 +28,13 @@ function App() {
   const handleChartType = () => {
     setType(!type);
   };
+
+  const handleLimitChange = (e) => {
+    setLimit(e.target.value);
+  };
+
   useEffect(() => {
-    axios.get(url + "?lim=30").then((response) => {
+    axios.get(url + "?lim=" + limit).then((response) => {
       setWaterData(makeWaterData(response.data.water));
     });
   }, [refresh]);
@@ -125,6 +132,18 @@ function App() {
               <button className="chartTypeButton" onClick={handleChartType}>
                 {type ? "BAR" : "LINE"}
               </button>
+              <span id="limitHolder">
+                <span>{limit}</span>
+                <input
+                  type="range"
+                  id="limitRange"
+                  min="10"
+                  max="100"
+                  step="10"
+                  value={limit}
+                  onChange={handleLimitChange}
+                />
+              </span>
             </span>
           </div>
           <div className="liveDataHolder">

@@ -108,7 +108,7 @@
 .liveTitleText {
     font-size: calc(var(--f0)*1.6);
     font-weight: 200;
-    padding: 0 calc(var(--f0)*3);
+    padding: 0 calc(var(--f0)*1);
 }
 
 #refresh {
@@ -126,7 +126,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    width: calc(var(--f0)*7);
+    width: calc(var(--f0)*10);
     background-color: var(--c10);
     border-radius: calc(var(--f0)*0.4);
     padding: calc(var(--f0)*0.4);
@@ -139,6 +139,19 @@
     padding: calc(var(--f0)*0.3);
     font-size: calc(var(--f0)*1.2);
     color: var(--text-dull);
+}
+
+#limitHolder {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 30%;
+    padding-left: var(--f0);
+}
+
+#limitRange {
+    width: calc(var(--f0)*2);
+    transform: rotate(270deg);
 }
 
 .liveDataHolder {
