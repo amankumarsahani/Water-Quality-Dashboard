@@ -1,5 +1,4 @@
 {
-    "homepage": "https://ehsanulhaq001.github.io/Water-Quality-Dashboard",
     "name": "water_quality_dashboard",
     "version": "0.1.0",
     "private": true,
@@ -19,8 +18,6 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": [
@@ -42,7 +39,6 @@
     },
     "devDependencies": {
         "axios": "^0.25.0",
-        "gh-pages": "^3.2.3",
         "mini-css-extract-plugin": "2.4.5",
         "react-loading": "^2.0.3"
     }
