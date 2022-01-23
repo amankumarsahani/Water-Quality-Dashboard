@@ -56,8 +56,36 @@ export const makeChart = (
       )`;
     });
   }
+  let scales = {
+    y: {
+      stacked: stacked,
+      position: "left",
+      beginAtZero: true,
+      grid: {
+        display: false,
+      },
+    },
+    x: {
+      stacked: stacked,
+      beginAtZero: true,
+      ticks: { maxRotation: 0, autoskip: true, autoSkipPadding: 20 },
+      grid: {
+        display: false,
+      },
+    },
+  };
+
   const datasets = yDataArr.map((yData, i) => {
-    console.log(i);
+    if (yAxisIDArr[i] === "y1") {
+      scales.y1 = {
+        stacked: stacked,
+        position: "right",
+        beginAtZero: true,
+        grid: {
+          display: false,
+        },
+      };
+    }
     return {
       type: type[i],
       label: yLabelArr[i],
@@ -77,32 +105,7 @@ export const makeChart = (
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      scales: {
-        y: {
-          stacked: stacked,
-          position: "left",
-          beginAtZero: true,
-          grid: {
-            display: false,
-          },
-        },
-        y1: {
-          stacked: stacked,
-          position: "right",
-          beginAtZero: true,
-          grid: {
-            display: false,
-          },
-        },
-        x: {
-          stacked: stacked,
-          beginAtZero: true,
-          ticks: { maxRotation: 0, autoskip: true, autoSkipPadding: 20 },
-          grid: {
-            display: false,
-          },
-        },
-      },
+      scales: scales,
     },
   });
 };
