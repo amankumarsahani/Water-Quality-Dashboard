@@ -100,6 +100,7 @@ export const makeChart = (
       borderColor: colorArr[i],
       borderWidth: 1,
       yAxisID: yAxisIDArr[i],
+      tension: 0,
     };
   });
 
