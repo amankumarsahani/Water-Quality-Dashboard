@@ -10,7 +10,7 @@ export const makeWaterData = (arr) => {
     tds.push(Math.abs(arr[i].TDS) > 1000 ? 0 : arr[i].TDS);
     cod.push(Math.abs(arr[i].COD) > 100 ? 0 : arr[i].COD);
     bod.push(Math.abs(arr[i].BOD) > 100 ? 0 : arr[i].BOD);
-    ph.push(Math.abs(arr[i].pH) > 100 ? 0 : arr[i].pH);
+    ph.push(Math.abs(arr[i].pH) > 20 ? 0 : arr[i].pH);
     temp.push(Math.abs(arr[i].Temperature) > 70 ? 0 : arr[i].Temperature);
     ec.push(
       Math.abs(arr[i]["Electro-conductivity"]) > 100
@@ -90,6 +90,9 @@ export const makeChart = (
         grid: {
           display: false,
         },
+        ticks: {
+          color: hexWithAlpha(colorArr[i], "dd"),
+        },
       };
     }
     return {
@@ -115,8 +118,22 @@ export const makeChart = (
       maintainAspectRatio: false,
       scales: scales,
       plugins: {
+        title: {
+          display: true,
+          text: title,
+          position: "top",
+          align: "start",
+          color: "#00c3ff",
+          font: {
+            size: fontSize * 2,
+            weight: "200",
+          },
+        },
         legend: {
+          position: "top",
+          align: "end",
           labels: {
+            color: "#00c3ff",
             display: true,
             font: {
               size: fontSize,
