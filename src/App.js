@@ -53,9 +53,9 @@ function App() {
       setChart1(
         makeChart(
           "c1",
-          "title",
+          "COD, BOD and pH",
           waterData.dataLabels,
-          ["COD", "BOD", "pH"],
+          ["COD mg/L         ", "BOD mg/L          ", "pH          "],
           ["y", "y", "y"],
           [waterData.cod, waterData.bod, waterData.ph],
           chartType,
@@ -73,13 +73,13 @@ function App() {
       setChart2(
         makeChart(
           "c2",
-          "title",
+          "Electrical conductivity and TDS",
           waterData.dataLabels,
-          ["Electro-conductivity", "TDS"],
+          ["Electrical conductivity mS/cm          ", "TDS ppm          "],
           ["y", "y1"],
           [waterData.ec, waterData.tds],
           chartType,
-          ["#17fc54", "#bb00ff"],
+          ["#17fc54", "#595bd9"],
           vw
         )
       );
@@ -95,7 +95,7 @@ function App() {
           "c3",
           "Temperature",
           waterData.dataLabels,
-          ["Temperature ºC"],
+          ["Temperature ºC          "],
           ["y"],
           [waterData.temp],
           chartType,
@@ -112,11 +112,6 @@ function App() {
       </header>
       <div className="graphHolder">
         <div id="g1" className="graph">
-          <div className="chart">
-            <canvas id="c1"></canvas>
-          </div>
-        </div>
-        <div id="g2" className="graph">
           <div id="liveTitle">
             <span className="liveTitleText">LIVE DATA</span>
             <span className="options">
@@ -160,37 +155,42 @@ function App() {
               </span>
             </div>
             <div id="ld2">
-              <span> COD : </span>
+              <span> TDS : </span>
               <span className="liveDataValue">
-                {parseFloat(liveData.cod && liveData.cod[1]).toFixed(3)}
+                {" "}
+                {parseFloat(liveData.tds && liveData.tds[1]).toFixed(1)} ppm
               </span>
             </div>
             <div id="ld3">
               <span> BOD : </span>
               <span className="liveDataValue">
                 {" "}
-                {parseFloat(liveData.bod && liveData.bod[1]).toFixed(3)}
+                {parseFloat(liveData.bod && liveData.bod[1]).toFixed(3)} mg/L
               </span>
             </div>
             <div id="ld4">
-              <span> TDS : </span>
+              <span> COD : </span>
               <span className="liveDataValue">
-                {" "}
-                {parseFloat(liveData.tds && liveData.tds[1]).toFixed(3)}
+                {parseFloat(liveData.cod && liveData.cod[1]).toFixed(3)} mg/L
               </span>
             </div>
             <div id="ld5">
-              <span>Electro-Conductivity : </span>
-              <span className="liveDataValue">
-                {parseFloat(liveData.ec && liveData.ec[1]).toFixed(3)} S/m
-              </span>
-            </div>
-            <div id="ld6">
               <span>Temperature : </span>
               <span className="liveDataValue">
                 {liveData.temp && liveData.temp[1]} ºC
               </span>
             </div>
+            <div id="ld6">
+              <span>Electro-Conductivity : </span>
+              <span className="liveDataValue">
+                {parseFloat(liveData.ec && liveData.ec[1]).toFixed(3)} mS/cm
+              </span>
+            </div>
+          </div>
+        </div>
+        <div id="g2" className="graph">
+          <div className="chart">
+            <canvas id="c1"></canvas>
           </div>
         </div>
         <div id="g3" className="graph">
