@@ -4,6 +4,7 @@ import Refresh from "./refresh.png";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeChart, makeWaterData } from "./utils.js";
+import ReactLoading from "react-loading";
 function App() {
   const url =
     "https://gcyiihdmt6.execute-api.us-west-2.amazonaws.com/default/GetWaterQuality";
@@ -112,81 +113,93 @@ function App() {
       </header>
       <div className="graphHolder">
         <div id="g1" className="graph">
-          <div id="liveTitle">
-            <span className="liveTitleText">LIVE DATA</span>
-            <span className="options">
-              <img
-                id="refresh"
-                src={Refresh}
-                alt="refresh icon"
-                onClick={() => {
-                  setRefresh(!refresh);
-                  console.log("refreshed");
-                }}
-              ></img>
-              <button className="chartTypeButton" onClick={handleChartType}>
-                {type ? "BAR" : "LINE"}
-              </button>
-              <span id="limitHolder">
-                <span>{limit}</span>
-                <input
-                  type="range"
-                  id="limitRange"
-                  min="10"
-                  max="100"
-                  step="10"
-                  value={limit}
-                  onChange={handleLimitChange}
-                />
-              </span>
-            </span>
-          </div>
-          <div className="liveDataHolder">
-            <div id="ld0">
-              <span>Time :</span>{" "}
-              <span className="liveDataValue">
-                {liveData.dataLabels && liveData.dataLabels[1]}
-              </span>
+          {!waterData ? (
+            <div id="loading">
+              <ReactLoading type={"bars"} color={"#2980b9"}></ReactLoading>
             </div>
-            <div id="ld1">
-              <span> pH : </span>
-              <span className="liveDataValue">
-                {parseFloat(liveData.ph && liveData.ph[1]).toFixed(3)}
-              </span>
-            </div>
-            <div id="ld2">
-              <span> TDS : </span>
-              <span className="liveDataValue">
-                {" "}
-                {parseFloat(liveData.tds && liveData.tds[1]).toFixed(1)} ppm
-              </span>
-            </div>
-            <div id="ld3">
-              <span> BOD : </span>
-              <span className="liveDataValue">
-                {" "}
-                {parseFloat(liveData.bod && liveData.bod[1]).toFixed(3)} mg/L
-              </span>
-            </div>
-            <div id="ld4">
-              <span> COD : </span>
-              <span className="liveDataValue">
-                {parseFloat(liveData.cod && liveData.cod[1]).toFixed(3)} mg/L
-              </span>
-            </div>
-            <div id="ld5">
-              <span>Temperature : </span>
-              <span className="liveDataValue">
-                {liveData.temp && liveData.temp[1]} ºC
-              </span>
-            </div>
-            <div id="ld6">
-              <span>Electro-Conductivity : </span>
-              <span className="liveDataValue">
-                {parseFloat(liveData.ec && liveData.ec[1]).toFixed(3)} mS/cm
-              </span>
-            </div>
-          </div>
+          ) : (
+            <>
+              <div id="liveTitle">
+                <span className="liveTitleText">LIVE DATA</span>
+                <span className="options">
+                  <img
+                    id="refresh"
+                    src={Refresh}
+                    alt="refresh icon"
+                    onClick={() => {
+                      setRefresh(!refresh);
+                      console.log("refreshed");
+                    }}
+                  ></img>
+                  <button className="chartTypeButton" onClick={handleChartType}>
+                    {type ? "BAR" : "LINE"}
+                  </button>
+                  <span id="limitHolder">
+                    <span>{limit}</span>
+                    <input
+                      type="range"
+                      id="limitRange"
+                      min="10"
+                      max="100"
+                      step="10"
+                      value={limit}
+                      onChange={handleLimitChange}
+                    />
+                  </span>
+                </span>
+              </div>
+              <div className="liveDataHolder">
+                <div id="ld0">
+                  <span>Time :</span>{" "}
+                  <span className="liveDataValue">
+                    {liveData.dataLabels && liveData.dataLabels[1]}
+                  </span>
+                </div>
+                <div id="ld1">
+                  <span> pH : </span>
+                  <span className="liveDataValue">
+                    {parseFloat(liveData.ph && liveData.ph[1]).toFixed(3)}
+                  </span>
+                </div>
+                <div id="ld2">
+                  <span> TDS : </span>
+                  <span className="liveDataValue">
+                    {" "}
+                    {parseFloat(liveData.tds && liveData.tds[1]).toFixed(1)} ppm
+                  </span>
+                </div>
+                <div id="ld3">
+                  <span> BOD : </span>
+                  <span className="liveDataValue">
+                    {" "}
+                    {parseFloat(liveData.bod && liveData.bod[1]).toFixed(
+                      3
+                    )}{" "}
+                    mg/L
+                  </span>
+                </div>
+                <div id="ld4">
+                  <span> COD : </span>
+                  <span className="liveDataValue">
+                    {parseFloat(liveData.cod && liveData.cod[1]).toFixed(3)}{" "}
+                    mg/L
+                  </span>
+                </div>
+                <div id="ld5">
+                  <span>Temperature : </span>
+                  <span className="liveDataValue">
+                    {liveData.temp && liveData.temp[1]} ºC
+                  </span>
+                </div>
+                <div id="ld6">
+                  <span>Electro-Conductivity : </span>
+                  <span className="liveDataValue">
+                    {parseFloat(liveData.ec && liveData.ec[1]).toFixed(3)} mS/cm
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <div id="g2" className="graph">
           <div className="chart">
