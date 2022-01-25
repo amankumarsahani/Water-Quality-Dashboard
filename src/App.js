@@ -16,7 +16,7 @@ function App() {
   const [liveData, setLiveData] = useState({});
   const [refresh, setRefresh] = useState(false);
   const [type, setType] = useState(1);
-  const [limit, setLimit] = useState(30);
+  // const [limit, setLimit] = useState(30);
   const [vw, setVw] = useState();
 
   const destroyCharts = (i) => {
@@ -30,21 +30,39 @@ function App() {
     setType(!type);
   };
 
-  const handleLimitChange = (e) => {
-    setLimit(e.target.value);
-  };
+  // const handleLimitChange = (e) => {
+  //   setLimit(e.target.value);
+  // };
 
   useEffect(() => {
-    axios.get(url + "?lim=" + limit).then((response) => {
-      setWaterData(makeWaterData(response.data.water));
+    axios.get(url).then((response) => {
+      setWaterData(makeWaterData(response.data.water, "time_stamp"));
     });
   }, [refresh]);
 
   useEffect(() => {
-    axios.get(url + "?live=1").then((response) => {
-      setLiveData(makeWaterData(response.data.water));
-    });
+    const intervalId = setInterval(() => {
+      setRefresh(!refresh);
+    }, 59 * 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [refresh]);
+
+  useEffect(() => {
+    const last_index = waterData && waterData.dataLabels.length - 1;
+    console.log(last_index);
+    waterData &&
+      setLiveData({
+        dataLabels: waterData.dataLabels[last_index],
+        tds: waterData.tds[last_index],
+        cod: waterData.cod[last_index],
+        bod: waterData.bod[last_index],
+        ph: waterData.ph[last_index],
+        temp: waterData.temp[last_index],
+        ec: waterData.ec[last_index],
+      });
+  }, [waterData]);
 
   useEffect(() => {
     destroyCharts(1);
@@ -134,7 +152,7 @@ function App() {
                   <button className="chartTypeButton" onClick={handleChartType}>
                     {type ? "BAR" : "LINE"}
                   </button>
-                  <span id="limitHolder">
+                  {/* <span id="limitHolder">
                     <span>{limit}</span>
                     <input
                       type="range"
@@ -145,56 +163,50 @@ function App() {
                       value={limit}
                       onChange={handleLimitChange}
                     />
-                  </span>
+                  </span> */}
                 </span>
               </div>
               <div className="liveDataHolder">
                 <div id="ld0">
                   <span>Time :</span>{" "}
                   <span className="liveDataValue">
-                    {liveData.dataLabels && liveData.dataLabels[1]}
+                    {liveData && liveData.dataLabels}
                   </span>
                 </div>
                 <div id="ld1">
                   <span> pH : </span>
                   <span className="liveDataValue">
-                    {parseFloat(liveData.ph && liveData.ph[1]).toFixed(3)}
+                    {liveData && parseFloat(liveData.ph).toFixed(3)}
                   </span>
                 </div>
                 <div id="ld2">
                   <span> TDS : </span>
                   <span className="liveDataValue">
-                    {" "}
-                    {parseFloat(liveData.tds && liveData.tds[1]).toFixed(1)} ppm
+                    {liveData && parseFloat(liveData.tds).toFixed(1)} ppm
                   </span>
                 </div>
                 <div id="ld3">
                   <span> BOD : </span>
                   <span className="liveDataValue">
-                    {" "}
-                    {parseFloat(liveData.bod && liveData.bod[1]).toFixed(
-                      3
-                    )}{" "}
-                    mg/L
+                    {liveData && parseFloat(liveData.bod).toFixed(3)} mg/L
                   </span>
                 </div>
                 <div id="ld4">
                   <span> COD : </span>
                   <span className="liveDataValue">
-                    {parseFloat(liveData.cod && liveData.cod[1]).toFixed(3)}{" "}
-                    mg/L
+                    {liveData && parseFloat(liveData.cod).toFixed(3)} mg/L
                   </span>
                 </div>
                 <div id="ld5">
                   <span>Temperature : </span>
                   <span className="liveDataValue">
-                    {liveData.temp && liveData.temp[1]} ºC
+                    {liveData && liveData.temp} ºC
                   </span>
                 </div>
                 <div id="ld6">
                   <span>Electro-Conductivity : </span>
                   <span className="liveDataValue">
-                    {parseFloat(liveData.ec && liveData.ec[1]).toFixed(3)} mS/cm
+                    {liveData && parseFloat(liveData.ec).toFixed(3)} mS/cm
                   </span>
                 </div>
               </div>

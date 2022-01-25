@@ -1,12 +1,12 @@
 import moment from "moment";
 import Chart from "chart.js/auto";
 
-export const makeWaterData = (arr) => {
-  arr.sort((a, b) => timeDateSorter(a, b, "Timestamp"));
+export const makeWaterData = (arr, key = "Timestamp") => {
+  arr.sort((a, b) => timeDateSorter(a, b, key));
   let [dataLabels, tds, cod, bod, ph, temp, ec] = [[], [], [], [], [], [], []];
   console.log("WaterDataFetched: ", arr.length);
   for (let i = 0; i < arr.length; i++) {
-    dataLabels.push(moment(toDate(arr[i]["Timestamp"])).format("lll"));
+    dataLabels.push(moment(toDate(arr[i][key])).format("lll"));
     tds.push(Math.abs(arr[i].TDS) > 1000 ? 0 : arr[i].TDS);
     cod.push(Math.abs(arr[i].COD) > 100 ? 0 : arr[i].COD);
     bod.push(Math.abs(arr[i].BOD) > 100 ? 0 : arr[i].BOD);
