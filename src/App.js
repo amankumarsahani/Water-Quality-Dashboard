@@ -8,7 +8,7 @@ import ReactLoading from "react-loading";
 function App() {
   const url =
     "https://gcyiihdmt6.execute-api.us-west-2.amazonaws.com/default/GetWaterQuality";
-
+  const [lastEndTime, setLastEndTime] = useState();
   const [waterData, setWaterData] = useState(null);
   const [chart1, setChart1] = useState(null);
   const [chart2, setChart2] = useState(null);
@@ -36,7 +36,15 @@ function App() {
 
   useEffect(() => {
     axios.get(url).then((response) => {
-      setWaterData(makeWaterData(response.data.water, "time_stamp"));
+      const newData = makeWaterData(response.data.water, "time_stamp");
+      if (
+        lastEndTime &&
+        lastEndTime === newData.dataLabels[newData.dataLabels.length - 1]
+      ) {
+        return null;
+      }
+      setWaterData(newData);
+      setLastEndTime(newData.dataLabels[response.data.water.length - 1]);
     });
   }, [refresh]);
 
@@ -51,7 +59,6 @@ function App() {
 
   useEffect(() => {
     const last_index = waterData && waterData.dataLabels.length - 1;
-    console.log(last_index);
     waterData &&
       setLiveData({
         dataLabels: waterData.dataLabels[last_index],
@@ -146,7 +153,6 @@ function App() {
                     alt="refresh icon"
                     onClick={() => {
                       setRefresh(!refresh);
-                      console.log("refreshed");
                     }}
                   ></img>
                   <button className="chartTypeButton" onClick={handleChartType}>
