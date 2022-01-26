@@ -21,7 +21,7 @@ export const makeWaterData = (arr, key = "Timestamp") => {
     ph.push(Math.abs(arr[i].pH) > 20 ? 0 : arr[i].pH);
     temp.push(Math.abs(arr[i].Temperature) > 70 ? 0 : arr[i].Temperature);
     ec.push(
-      Math.abs(arr[i]["Electro-conductivity"]) > 100
+      Math.abs(arr[i]["Electro-conductivity"]) > 10
         ? 0
         : arr[i]["Electro-conductivity"]
     );
