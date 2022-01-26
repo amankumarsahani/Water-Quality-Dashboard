@@ -91,7 +91,7 @@ function App() {
           ["y", "y", "y", "y1"],
           [waterData.dio, waterData.cod, waterData.bod, waterData.ph],
           chartType,
-          ["#595bd9", "#ff006f", "#0062ff", "#17fc54"],
+          ["#ff5e00", "#ff006f", "#0062ff", "#17fc54"],
           vw
         )
       );
