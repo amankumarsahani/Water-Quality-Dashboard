@@ -3,12 +3,21 @@ import Chart from "chart.js/auto";
 
 export const makeWaterData = (arr, key = "Timestamp") => {
   arr.sort((a, b) => timeDateSorter(a, b, key));
-  let [dataLabels, tds, cod, bod, ph, temp, ec] = [[], [], [], [], [], [], []];
+  let [dataLabels, tds, cod, bod, ph, temp, ec, dio] = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ];
   for (let i = 0; i < arr.length; i++) {
     dataLabels.push(moment(toDate(arr[i][key])).format("lll"));
-    tds.push(Math.abs(arr[i].TDS) > 1000 ? 0 : arr[i].TDS);
-    cod.push(Math.abs(arr[i].COD) > 100 ? 0 : arr[i].COD);
-    bod.push(Math.abs(arr[i].BOD) > 100 ? 0 : arr[i].BOD);
+    tds.push(Math.abs(arr[i].TDS) > 500 ? 0 : arr[i].TDS);
+    cod.push(Math.abs(arr[i].COD) > 50 ? 0 : arr[i].COD);
+    bod.push(Math.abs(arr[i].BOD) > 50 ? 0 : arr[i].BOD);
     ph.push(Math.abs(arr[i].pH) > 20 ? 0 : arr[i].pH);
     temp.push(Math.abs(arr[i].Temperature) > 70 ? 0 : arr[i].Temperature);
     ec.push(
@@ -16,8 +25,9 @@ export const makeWaterData = (arr, key = "Timestamp") => {
         ? 0
         : arr[i]["Electro-conductivity"]
     );
+    dio.push(parseFloat(cod[i]) + parseFloat(bod[i]));
   }
-  return { dataLabels, tds, cod, bod, ph, temp, ec };
+  return { dataLabels, tds, cod, bod, ph, temp, ec, dio };
 };
 
 export const timeDateSorter = (_a, _b, key) => {
@@ -138,6 +148,12 @@ export const makeChart = (
               size: fontSize,
             },
           },
+        },
+      },
+      elements: {
+        point: {
+          radius: 1,
+          hoverRadius: 10,
         },
       },
     },
