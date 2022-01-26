@@ -68,24 +68,30 @@ function App() {
         ph: waterData.ph[last_index],
         temp: waterData.temp[last_index],
         ec: waterData.ec[last_index],
+        dio: waterData.dio[last_index],
       });
   }, [waterData]);
 
   useEffect(() => {
     destroyCharts(1);
-    let chartType = ["bar", "bar", "bar"];
-    if (type) chartType = ["line", "line", "line"];
+    let chartType = ["bar", "bar", "bar", "bar"];
+    if (type) chartType = ["line", "line", "line", "line"];
     waterData &&
       setChart1(
         makeChart(
           "c1",
-          "COD, BOD and pH",
+          "DO, COD, BOD and pH",
           waterData.dataLabels,
-          ["COD mg/L         ", "BOD mg/L          ", "pH          "],
-          ["y", "y", "y"],
-          [waterData.cod, waterData.bod, waterData.ph],
+          [
+            "DO mg/L         ",
+            "COD mg/L          ",
+            "BOD mg/L          ",
+            "pH          ",
+          ],
+          ["y", "y", "y", "y1"],
+          [waterData.dio, waterData.cod, waterData.bod, waterData.ph],
           chartType,
-          ["#ff006f", "#0062ff", "#15ff00"],
+          ["#595bd9", "#ff006f", "#0062ff", "#17fc54"],
           vw
         )
       );
@@ -180,6 +186,10 @@ function App() {
                   </span>
                 </div>
                 <div id="ld1">
+                  <span>Temperature : </span>
+                  <span className="liveDataValue">
+                    {liveData && liveData.temp} ºC
+                  </span>
                   <span> pH : </span>
                   <span className="liveDataValue">
                     {liveData && parseFloat(liveData.ph).toFixed(3)}
@@ -188,29 +198,29 @@ function App() {
                 <div id="ld2">
                   <span> TDS : </span>
                   <span className="liveDataValue">
-                    {liveData && parseFloat(liveData.tds).toFixed(1)} ppm
+                    {liveData && parseFloat(liveData.tds).toFixed(2)} ppm
                   </span>
                 </div>
                 <div id="ld3">
                   <span> BOD : </span>
                   <span className="liveDataValue">
-                    {liveData && parseFloat(liveData.bod).toFixed(2)} mg/L
+                    {liveData && parseFloat(liveData.bod).toFixed(1)} mg/L
                   </span>
                 </div>
                 <div id="ld4">
                   <span> COD : </span>
                   <span className="liveDataValue">
-                    {liveData && parseFloat(liveData.cod).toFixed(2)} mg/L
+                    {liveData && parseFloat(liveData.cod).toFixed(1)} mg/L
                   </span>
                 </div>
                 <div id="ld5">
-                  <span>Temperature : </span>
+                  <span>DO : </span>
                   <span className="liveDataValue">
-                    {liveData && liveData.temp} ºC
+                    {liveData && parseFloat(liveData.dio).toFixed(1)} mg/L
                   </span>
                 </div>
                 <div id="ld6">
-                  <span>Electro-Conductivity : </span>
+                  <span>Electrical Conductivity : </span>
                   <span className="liveDataValue">
                     {liveData && parseFloat(liveData.ec).toFixed(3)} mS/cm
                   </span>
