@@ -204,19 +204,19 @@ function App() {
                 <div id="ld3">
                   <span> BOD : </span>
                   <span className="liveDataValue">
-                    {liveData && parseFloat(liveData.bod).toFixed(1)} mg/L
+                    {liveData && parseFloat(liveData.bod).toFixed(2)} mg/L
                   </span>
                 </div>
                 <div id="ld4">
                   <span> COD : </span>
                   <span className="liveDataValue">
-                    {liveData && parseFloat(liveData.cod).toFixed(1)} mg/L
+                    {liveData && parseFloat(liveData.cod).toFixed(2)} mg/L
                   </span>
                 </div>
                 <div id="ld5">
                   <span>DO : </span>
                   <span className="liveDataValue">
-                    {liveData && parseFloat(liveData.dio).toFixed(1)} mg/L
+                    {liveData && parseFloat(liveData.dio).toFixed(2)} mg/L
                   </span>
                 </div>
                 <div id="ld6">
