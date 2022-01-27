@@ -18,12 +18,14 @@ function App() {
   const [type, setType] = useState(1);
   // const [limit, setLimit] = useState(30);
   const [vw, setVw] = useState();
+  const [index, setIndex] = useState(1);
 
   const destroyCharts = (i) => {
     if (i === 1) chart1 && chart1.destroy();
     else if (i === 2) chart2 && chart2.destroy();
     else if (i === 3) chart3 && chart3.destroy();
-    setVw((0.8 * window.innerWidth) / 100);
+    setVw((0.8 * Math.min(window.innerWidth, window.screen.width)) / 100);
+    setIndex(window.screen.width > 700);
   };
 
   const handleChartType = () => {
@@ -82,17 +84,21 @@ function App() {
           "c1",
           "DO, COD, BOD and pH",
           waterData.dataLabels,
-          [
-            "DO mg/L         ",
-            "COD mg/L          ",
-            "BOD mg/L          ",
-            "pH          ",
-          ],
-          ["y", "y", "y", "y1"],
+          index
+            ? [
+                "DO mg/L         ",
+                "COD mg/L          ",
+                "BOD mg/L          ",
+                "pH          ",
+              ]
+            : ["DO mg/L", "COD mg/L", "BOD mg/L", "pH"],
+
+          ["", "", "", "1"],
           [waterData.dio, waterData.cod, waterData.bod, waterData.ph],
           chartType,
           ["#ff5e00", "#ff006f", "#0062ff", "#17fc54"],
-          vw
+          vw,
+          index ? "x" : "y"
         )
       );
   }, [waterData, type]);
@@ -107,12 +113,15 @@ function App() {
           "c2",
           "Electrical conductivity and TDS",
           waterData.dataLabels,
-          ["Electrical conductivity mS/cm          ", "TDS ppm          "],
-          ["y", "y1"],
+          index
+            ? ["Electrical conductivity mS/cm          ", "TDS ppm          "]
+            : ["Electrical conductivity mS/cm", "TDS ppm"],
+          ["", "1"],
           [waterData.ec, waterData.tds],
           chartType,
           ["#17fc54", "#595bd9"],
-          vw
+          vw,
+          index ? "x" : "y"
         )
       );
   }, [waterData, type]);
@@ -127,12 +136,13 @@ function App() {
           "c3",
           "Temperature",
           waterData.dataLabels,
-          ["Temperature ºC          "],
-          ["y"],
+          ["Temperature ºC"],
+          [""],
           [waterData.temp],
           chartType,
           ["#ff5e00"],
-          vw
+          vw,
+          index ? "x" : "y"
         )
       );
   }, [waterData, type]);

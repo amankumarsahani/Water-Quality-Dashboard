@@ -51,11 +51,12 @@ export const makeChart = (
   title,
   xLabel,
   yLabelArr,
-  yAxisIDArr,
+  axisIDArr,
   yDataArr,
   type,
   colorArr = [],
-  fontSize = 14
+  fontSize = 14,
+  indexAxis = "x"
 ) => {
   if (colorArr === []) {
     yDataArr.forEach((_, i) => {
@@ -65,6 +66,7 @@ export const makeChart = (
       )`;
     });
   }
+  if (fontSize < 8) fontSize = 8;
   let scales = {
     y: {
       position: "left",
@@ -78,6 +80,7 @@ export const makeChart = (
       },
     },
     x: {
+      position: "bottom",
       beginAtZero: true,
       ticks: {
         maxRotation: 0,
@@ -92,28 +95,57 @@ export const makeChart = (
   };
 
   const datasets = yDataArr.map((yData, i) => {
-    if (yAxisIDArr[i] === "y1") {
-      scales.y1 = {
-        position: "right",
-        beginAtZero: true,
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: hexWithAlpha(colorArr[i], "dd"),
-        },
-      };
+    if (axisIDArr[i] === "1") {
+      if (indexAxis === "x") {
+        scales.y1 = {
+          position: "right",
+          beginAtZero: true,
+          grid: {
+            display: false,
+          },
+          ticks: {
+            color: hexWithAlpha(colorArr[i], "dd"),
+            font: { size: fontSize },
+          },
+        };
+      } else {
+        scales.x1 = {
+          position: "top",
+          barPercentage: 1.0,
+          categoryPercentage: 0.5,
+          beginAtZero: true,
+          grid: {
+            display: false,
+          },
+          ticks: {
+            color: hexWithAlpha(colorArr[i], "dd"),
+            font: { size: fontSize },
+          },
+        };
+      }
     }
-    return {
+    let xId;
+    let yId;
+    if (axisIDArr[i] === "1") {
+      if (indexAxis === "x") {
+        yId = "y1";
+      }
+      xId = "x1";
+    }
+    let ret = {
       type: type[i],
       label: yLabelArr[i],
       data: yData,
       backgroundColor: hexWithAlpha(colorArr[i], "55"),
       borderColor: colorArr[i],
       borderWidth: 1,
-      yAxisID: yAxisIDArr[i],
+
       tension: 0,
     };
+    if (indexAxis === "x") {
+      ret.yAxisID = yId;
+    } else ret.xAxisID = xId;
+    return ret;
   });
 
   return new Chart(document.getElementById(canvasId).getContext("2d"), {
@@ -123,6 +155,7 @@ export const makeChart = (
       datasets: datasets,
     },
     options: {
+      indexAxis: indexAxis,
       responsive: true,
       maintainAspectRatio: false,
       scales: scales,

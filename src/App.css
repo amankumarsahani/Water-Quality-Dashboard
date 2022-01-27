@@ -240,3 +240,24 @@ canvas {
         transform: rotate(180deg);
     }
 }
+
+@media only screen and (max-width: 900px) {
+     :root {
+        --f0: min(3.5vw, 1.2rem);
+    }
+    .App {
+        height: 100%;
+    }
+    .graphHolder {
+        display: flex;
+        flex-direction: column;
+    }
+    .liveDataHolder div {
+        padding: calc(var(--f0)*0.6) var(--f0);
+    }
+    canvas {
+        margin: 0;
+        padding: var(--f0);
+        height: 60vh;
+    }
+}
