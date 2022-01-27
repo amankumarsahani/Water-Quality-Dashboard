@@ -136,7 +136,7 @@ function App() {
           "c3",
           "Temperature",
           waterData.dataLabels,
-          ["Temperature ºC"],
+          index ? ["Temperature ºC          "] : ["Temperature ºC"],
           [""],
           [waterData.temp],
           chartType,
