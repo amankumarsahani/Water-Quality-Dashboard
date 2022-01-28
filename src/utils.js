@@ -42,7 +42,14 @@ export const timeDateSorter = (_a, _b, key) => {
 };
 
 function toDate(a) {
-  a = a.substring(3, 6) + a.substring(0, 3) + a.substring(6);
+  a =
+    a.substring(5, 7) +
+    "/" +
+    a.substring(8, 10) +
+    "/" +
+    a.substring(0, 4) +
+    " " +
+    a.substring(11, 19);
   return new Date(a);
 }
 
