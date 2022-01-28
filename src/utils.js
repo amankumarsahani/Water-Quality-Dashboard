@@ -2,7 +2,8 @@ import moment from "moment";
 import Chart from "chart.js/auto";
 
 export const makeWaterData = (arr, key = "Timestamp") => {
-  arr.sort((a, b) => timeDateSorter(a, b, key));
+  //no need to sort data, data comes sorted from api
+  // arr.sort((a, b) => timeDateSorter(a, b, key));
   let [dataLabels, tds, cod, bod, ph, temp, ec, dio] = [
     [],
     [],
@@ -30,16 +31,16 @@ export const makeWaterData = (arr, key = "Timestamp") => {
   return { dataLabels, tds, cod, bod, ph, temp, ec, dio };
 };
 
-export const timeDateSorter = (_a, _b, key) => {
-  let a = _a[key];
-  let b = _b[key];
+// export const timeDateSorter = (_a, _b, key) => {
+//   let a = _a[key];
+//   let b = _b[key];
 
-  let p = toDate(a);
-  let q = toDate(b);
-  if (p < q) return -1;
-  else if (p > q) return 1;
-  return 0;
-};
+//   let p = toDate(a);
+//   let q = toDate(b);
+//   if (p < q) return -1;
+//   else if (p > q) return 1;
+//   return 0;
+// };
 
 function toDate(a) {
   a =
