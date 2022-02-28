@@ -26,7 +26,7 @@ export const makeWaterData = (arr, key = "Timestamp") => {
         ? 0
         : arr[i]["Electro-conductivity"]
     );
-    dio.push(12.27 - 0.6 * parseFloat(cod[i]) - 0.35 * parseFloat(bod[i]));
+    dio.push(10.27 - 0.6 * parseFloat(cod[i]) - 0.35 * parseFloat(bod[i]));
   }
   return { dataLabels, tds, cod, bod, ph, temp, ec, dio };
 };
