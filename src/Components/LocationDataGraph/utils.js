@@ -173,10 +173,10 @@ export const makeChart = (
           text: title,
           position: "top",
           align: "start",
-          color: "#00c3ff",
+          color: "#0062ff",
           font: {
             size: fontSize * 2,
-            weight: "200",
+            weight: "bold",
           },
         },
         legend: {
